@@ -1,7 +1,12 @@
 #include "deque.h"
 
-bool deque_is_empty(cxc_deque* deque) { return deque->head == NULL; }
-
+/**
+ * @brief Create a new node with given data.
+ *
+ * @param data Pointer to the data to be stored in the node.
+ * @param data_size Size of the data to be stored in the node.
+ * @return Pointer to the newly created node.
+ */
 node_t* node_create(void* data, size_t data_size) {
   node_t* node = (node_t*)malloc(sizeof(node_t));
 
@@ -23,6 +28,11 @@ node_t* node_create(void* data, size_t data_size) {
   return node;
 }
 
+/**
+ * @brief Destroy a node and free its memory.
+ *
+ * @param node Pointer to the node to be destroyed.
+ */
 void node_destroy(node_t* node) {
   if (!node) return;
 
@@ -30,6 +40,12 @@ void node_destroy(node_t* node) {
   free(node);
 }
 
+/**
+ * @brief Create a new deque.
+ *
+ * @param data_size Size of the data to be stored in the deque nodes.
+ * @return Pointer to the newly created deque.
+ */
 cxc_deque* deque_create(size_t data_size) {
   cxc_deque* deque = (cxc_deque*)malloc(sizeof(cxc_deque));
 
@@ -44,6 +60,14 @@ cxc_deque* deque_create(size_t data_size) {
   return deque;
 };
 
+/**
+ * @brief Check if the deque is empty.
+ *
+ * @param deque Pointer to the deque.
+ * @return true if the deque is empty, false otherwise.
+ */
+bool deque_is_empty(cxc_deque* deque) { return deque->head == NULL; }
+
 void deque_push_front(cxc_deque* deque, void* data) {
   node_t* new_node = node_create(data, deque->data_size);
 
@@ -57,6 +81,12 @@ void deque_push_front(cxc_deque* deque, void* data) {
   deque->head = new_node;
 }
 
+/**
+ * @brief Push data to the front of the deque.
+ *
+ * @param deque Pointer to the deque.
+ * @param data Pointer to the data to be pushed.
+ */
 void deque_push_back(cxc_deque* deque, void* data) {
   node_t* new_node = node_create(data, deque->data_size);
 
@@ -69,6 +99,12 @@ void deque_push_back(cxc_deque* deque, void* data) {
   }
 }
 
+/**
+ * @brief Push data to the back of the deque.
+ *
+ * @param deque Pointer to the deque.
+ * @param data Pointer to the data to be pushed.
+ */
 void deque_destroy(cxc_deque* deque) {
   if (deque_is_empty(deque)) return;
 
@@ -83,6 +119,11 @@ void deque_destroy(cxc_deque* deque) {
   free(deque);
 }
 
+/**
+ * @brief Remove and destroy the front node of the deque.
+ *
+ * @param deque Pointer to the deque.
+ */
 void deque_pop_front(cxc_deque* deque) {
   if (deque_is_empty(deque)) return;
 
@@ -99,6 +140,11 @@ void deque_pop_front(cxc_deque* deque) {
   node_destroy(old_head);
 };
 
+/**
+ * @brief Remove and destroy the back node of the deque.
+ *
+ * @param deque Pointer to the deque.
+ */
 void deque_pop_back(cxc_deque* deque) {
   if (deque_is_empty(deque)) return;
 
@@ -114,6 +160,12 @@ void deque_pop_back(cxc_deque* deque) {
   node_destroy(old_tail);
 };
 
+/**
+ * @brief Traverse the deque and apply a callback function to each node.
+ *
+ * @param deque Pointer to the deque.
+ * @param cb Callback function to apply to each node.
+ */
 void deque_traverse(cxc_deque* deque, callback_fn cb) {
   if (deque_is_empty(deque)) return;
 
@@ -125,6 +177,11 @@ void deque_traverse(cxc_deque* deque, callback_fn cb) {
   }
 }
 
+/**
+ * @brief Clear the deque, destroying all nodes.
+ *
+ * @param deque Pointer to the deque.
+ */
 void deque_clear(cxc_deque* deque) {
   if (deque_is_empty(deque)) return;
 
